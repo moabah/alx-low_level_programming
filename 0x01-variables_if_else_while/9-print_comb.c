@@ -1,4 +1,4 @@
-#include <stdio.h>#include <stdio.h>
+#include <stdio.h>
 
 /**
  * main - print possible combination 0-9
