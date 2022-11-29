@@ -1,28 +1,32 @@
 #include "lists.h"
 
 /**
- * reverse_listint - the function that reverses a listint_t
- * @head: double pointer
+ * find_listint_loop - finds the loop in a linked list.
+ * @head: pointer to the beginning of the list
  *
- * Return: a pointer to the first node of the reversed list
+ * Return: address of the node where the loop starts or NULL if there's no loop
  */
-listint_t *reverse_listint(listint_t **head)
+listint_t *find_listint_loop(listint_t *head)
 {
-	listint_t *previous, *next;
+	listint_t *tortoise, *hare;
 
-	if (head == NULL || *head == NULL)
-		return (NULL);
-	if ((*head)->next == NULL)
-		return (*head);
-	previous = NULL;
-	while (*head != NULL)
+	tortoise = hare = head;
+	while (tortoise && hare && hare->next)
 	{
-		next = (*head)->next;
-		(*head)->next = previous;
-		previous = *head;
-		*head = next;
+		tortoise = tortoise->next;
+		hare = hare->next->next;
+		if (tortoise == hare)
+		{
+			tortoise = head;
+			break;
+		}
 	}
-	*head = previous;
-	return (*head);
+	if (!tortoise || !hare || !hare->next)
+		return (NULL);
+	while (tortoise != hare)
+	{
+		tortoise = tortoise->next;
+		hare = hare->next;
+	}
+	return (hare);
 }
-
